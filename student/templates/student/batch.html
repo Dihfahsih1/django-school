@@ -1,0 +1,65 @@
+{% extends 'student/base.html' %}
+
+{% load staticfiles%}
+
+{% block css %}
+<!--<link rel="stylesheet" href="{% static 'student\batch.css' %}">-->
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'student\batch.js' %}"></script>
+{% endblock %}
+
+{% block title%}Batch{% endblock %} {% block activebatches %}active{% endblock %} {% block body %}
+
+<body>
+  <div class="container-fluid" style="margin-top:16px">
+    <div class="row">
+      <div class="col-md-12">
+        <a class="click" href="{% url 'student:batch-add' %}" role="button">
+          <button class="btn btn-dark">Add Batch</button>
+        </a>
+      </div>
+    </div>
+     <div class="row" style="margin-top: 24px">
+      {% for batch in object_list %}
+      <div class="col-md-3" style="margin-top: 12px">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ batch.batch_day }}
+              <span class="badge badge-warning" style="padding: 4px">{{batch.level}}</span>
+            </h5>
+            <hr>
+            <div>
+              <b>Batch Start Time</b> : <span style="font-size: 18px">{{ batch.batch_start_time }}</span>
+            </div>
+            <div>
+              <b>Batch End Time</b> : <span style="font-size: 18px">{{ batch.batch_end_time }}</span>
+            </div>
+            <div style="margin-top: 16px">
+              <a href="{% url 'student:batch_student' batch.pk %}">
+                <button  class="btn btn-dark">
+                  <i class="fa fa-users"></i>
+                </button>
+              </a>
+              <a href="{% url 'student:batch-update' batch.pk %}">
+                <button class="btn btn-info">
+                  <i class="fa fa-edit"></i>
+                </button>
+              </a>
+              <a href="{% url 'student:batch-delete' batch.pk %}">
+                <button class="btn btn-danger">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+
+  </div>
+</body>
+{% endblock %}

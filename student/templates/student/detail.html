@@ -1,0 +1,208 @@
+{% extends 'student/base.html' %}
+
+{% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'student\detail.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js\smoothScroll.js' %}"></script>
+{% endblock %}
+
+{% block title%}{{ stu }}{% endblock %}
+
+{% block activestudent %}active{% endblock %}
+
+{% block body %}
+	<div class="container-fluid" style="padding-bottom: 100px;">
+		<div class="m-4">
+			<h1>{{ stu }}</h1>
+		</div>
+        <hr>
+		<div class="row margin-top-20">
+			<!--<div class="col-md-2">-->
+				<!--<ul class="side-menu-items">-->
+					<!--<li class="sliding-u-l-r-l">-->
+						<!--<a href="#Information">General Information</a>-->
+					<!--</li>-->
+					<!--<li class="sliding-u-l-r-l">-->
+						<!--<a href="#Contact">Emergency Contact</a>-->
+					<!--</li>-->
+					<!--<li class="sliding-u-l-r-l">-->
+						<!--<a href="#Attendance">Attendance</a>-->
+					<!--</li>-->
+					<!--<li class="sliding-u-l-r-l">-->
+						<!--<a href="#Progress">Progress</a>-->
+					<!--</li>-->
+					<!--<li class="sliding-u-l-r-l">-->
+						<!--<a href="#Fees">Fees</a>-->
+					<!--</li>-->
+				<!--</ul>-->
+			<!--</div>-->
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-6" id="Information">
+						<div class="card">
+							<div class="card-header">
+								<i class="fas fa-address-card"></i>
+								General Information
+							</div>
+							<div class="card-body">
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">
+										<span style="font-weight:bold">Address</span>: {{ stu.address }}</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Postal Code</span>: {{ stu.postal_code }}</li>
+									</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Date of Birth</span>: {{ stu.date_of_birth }}</li>
+									</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Date of Joining</span>: {{ stu.date_of_joining }}</li>
+									</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Phone Number</span>: {{ stu.phone_number }}</li>
+									</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Rank</span>: {{ stu.rank }}</li>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" id="Contact">
+						<div class="card">
+							<div class="card-header">
+								<i class="fas fa-address-card"></i>
+								Emergency Contact
+							</div>
+							<div class="card-body">
+								{% if guardian %}
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">
+										<span style="font-weight:bold">Name</span>: {{ guardian }}</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Address</span>: {{ guardian.address }}</li>
+									</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Postal Code</span>: {{ guardian.postal_code }}</li>
+									</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Phone Number</span>: {{ guardian.phone_number }}</li>
+									</li>
+									<li class="list-group-item">
+										<span style="font-weight:bold">Relation</span>: {{ guardian.relation }}</li>
+									</li>
+								</ul>
+								{% else %}
+								<p> There is no Emergency Contact Added. Please <a href="{% url 'student:student-guardian' stu.pk %}">Cick here</a> to add </p>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+                    <hr>
+					<div class="col-md-6 margin-top-20" id="Progress">
+						<div class="card">
+							<div class="card-header">
+								<i class="fas fa-tasks"></i>
+								Progress
+                                <a class="btn float-right click" style="display:'inline-block'" href="{% url 'student:progress' stu.pk %}" role="button">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+							</div>
+							<div class="card-body">
+								<table class="table table-responsive-sm table-striped table-condensed sortable">
+									{% if progress %}
+									<thead>
+										<tr>
+											<th align="center">From Belt</th>
+											<th align="center">To Belt</th>
+											<th align="center">Date</th>
+										</tr>
+
+									</thead>
+									<tbody>
+										{% for pro in progress %}
+										<tr>
+											<td>{{ pro.progress_belt_from }}</td>
+											<td>{{ pro.progress_belt_to }}</td>
+											<td>{{ pro.progress_date }}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+									{% else %}
+									<p> There is no Progress Report Added. Please <a href="#">Cick here</a> to add </p>
+									{% endif%}
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 margin-top-20" id="Fees">
+						<div class="card">
+							<div class="card-header">
+								<i class="fas fa-money-check-alt"></i>
+								Fees
+							</div>
+							<div class="card-body">
+								<table class="table table-responsive-sm table-striped table-condensed sortable">
+									{% if fee %}
+									<thead>
+										<tr>
+											<th align="center">Payment Type</th>
+											<th align="center">Payment Date</th>
+											<th align="center">Payment Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for f in fee %}
+										<tr>
+											<td>{{ f.fee_name }}</td>
+											<td>{{ f.fee_date }}</td>
+											<td>{{ f.fee_amount }}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+									{% else %}
+									<p> There is no Fees Added. Please <a href="{% url 'student:finance' %}">Cick here</a> to add </p>
+									{% endif%}
+								</table>
+							</div>
+						</div>
+					</div>
+                    <hr>
+					<div class="col-md-12 margin-top-20" id="Attendance">
+						<div class="card">
+							<div class="card-header">
+								<i class="fas fa-calendar-alt"></i>
+								Attendance
+							</div>
+							<div class="card-body">
+								<table class="table table-responsive-sm table-striped table-condensed sortable">
+									{% if attendance %}
+									<thead>
+										<tr>
+											<th align="center">Date</th>
+											<th align="center">Count</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for attend in attendance %}
+										<tr>
+											<td>{{ attend.attendance_date }}</td>
+											<td>{{ attend.attendance_count }}</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+									{% else %}
+									<p> There is no Attendance Added. Please <a href="{% url 'student:attend' %}">Cick here</a> to add </p>
+									{% endif%}
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+{% endblock %}

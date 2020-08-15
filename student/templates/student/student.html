@@ -1,0 +1,98 @@
+{% extends 'student/base.html' %} {% load staticfiles%} {% block css %}
+<link rel="stylesheet" href="{% static 'student\student.css' %}"> {% endblock %}
+
+{% block javascript %}
+<!--<script>-->
+<!--function myFunction() {-->
+    <!--// Declare variables-->
+    <!--var input, filter, ul, li, a, i;-->
+    <!--input = document.getElementById('myInput');-->
+    <!--filter = input.value.toUpperCase();-->
+    <!--ul = document.getElementById("mySearch");-->
+    <!--li = ul.getElementsByTagName('td');-->
+
+    <!--// Loop through all list items, and hide those who don't match the search query-->
+    <!--for (i = 0; i < li.length; i++) {-->
+        <!--a = li[i].getElementsByTagName("a")[0];-->
+        <!--if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {-->
+            <!--li[i].style.display = "";-->
+        <!--} else {-->
+            <!--li[i].style.display = "none";-->
+        <!--}-->
+    <!--}-->
+<!--}-->
+<!--</script>-->
+<!--<script src="{% static 'student/student.js' %}"></script>-->
+{% endblock %}
+
+{% block title%}Students{% endblock %} {% block activestudent %}active{% endblock %} {% block body %}
+<div class="jumbotron bg-light">
+    <div class="row">
+        <div class="col col-lg-12">
+            <a class="btn btn-dark" href="{% url 'student:student-add' %}" role="button">Add Student</a>
+            <div class="form-group float-right">
+                <form action="{% url 'student:student-search' %}" method="GET" accept-charset="utf-8">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <i class="fa fa-search input-group-text" style="padding-top:10px;"></i>
+                        </div>
+                        <input
+                                class="form-control"
+                                type="text" name="q"
+                                value="{{request.GET.q}}"
+                                placeholder="Search"
+                                style="width:500px;"/>
+                    </div>
+                </form>
+            </div>
+            {% if object_list %}
+            <div style="margin-top:1em" class="card">
+                <div class="card-header text-dark table-heading">Students</div>
+                <div class="card-body panel-full">
+                    <table class="table table-responsive-sm table-striped table-condensed sortable">
+                        <thead>
+                            <tr class="text-center">
+                                <th align="center">ID</th>
+                                <th align="center">First Name</th>
+                                <th align="center">Last Name</th>
+                                <th align="center">Age</th>
+                                <th align="center">Emergency Contact</th>
+                                <th align="center">Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="mySearch">
+                            {% for stu in object_list %}
+                            <tr class="text-center">
+                                <td>
+                                    {{ stu.pk }}
+                                </td>
+                                <td>{{ stu.first_name }}</td>
+                                <td>{{ stu.last_name }}</td>
+                                <td>{{ stu.age }}</td>
+                                <td>{{ stu.guardian }}</td>
+                                <td style="padding: 0px">
+                                    <a class="btn btn-success click" style="display:'inline-block'" href="{% url 'student:detail' stu.id %}" role="button">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                    <a class="btn btn-info click" style="display:'inline-block'" href="{% url 'student:student-update' stu.id %}" role="button">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a class="btn btn-danger click" href="{% url 'student:student-delete' stu.id %}" role="button">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+                <p> 0 Students Found </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

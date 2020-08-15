@@ -1,0 +1,46 @@
+{% extends 'student/base.html' %}
+
+{% load staticfiles%}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'student\student.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'student/student.js' %}"></script>
+{% endblock %}
+
+{% block title%}Report{% endblock %} {% block activefee %}active{% endblock %}
+
+{% block body %}
+<div class="jumbotron bg-light">
+    <div class="row">
+        <div class="col col-lg-12">
+            <div style="margin-top:1em" class="card">
+                <div class="card-header text-dark table-heading">Report</div>
+                <div class="card-body panel-full">
+                    <table class="table table-responsive-sm table-striped table-condensed sortable">
+                        <thead>
+                            <tr class="text-center">
+                                <th align="center">Month</th>
+                                <th align="center">Total Amount ($)</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stu in report %}
+                            <tr class="text-center">
+                                <td>{{ stu.month }}</td>
+                                <td>{{ stu.amount }}</td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

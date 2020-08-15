@@ -1,0 +1,57 @@
+{% extends 'student/base.html' %} 
+
+{% load staticfiles%} 
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'student\student.css' %}"> 
+{% endblock %} 
+
+{% block javascript %}
+<script src="{% static 'student/student.js' %}"></script>
+{% endblock %} 
+
+{% block title%}Instructor{% endblock %} 
+
+{% block activeinstructor %}active{% endblock %} 
+
+{% block body %}
+<div class="jumbotron bg-light"  style="margin-top:12px; margin-bottom:70px;">
+    <div class="row">
+        <div class="col col-lg-12">
+            <div style="margin-top:1em" class="card">
+                <div class="card-header text-dark table-heading">Instructor</div>
+                <div class="card-body panel-full">
+                    <table class="table table-responsive-sm table-striped table-condensed sortable">
+                        <thead>
+                            <tr class="text-center">
+                                <!-- <th align="center">Instructor ID</th> -->
+                                <th align="center">First Name</th>
+                                <th align="center">Last Name</th>
+                                <th align="center">Address</th>
+                                <th align="center">Postal Code</th>
+                                <th align="center">Email ID</th>
+                                <th align="center">Phone Number</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ins in object_list %}
+                            <tr class="text-center">
+                                <!-- <td>{{ ins.pk }}</td> -->
+                                <td>{{ ins.first_name }}</td>
+                                <td>{{ ins.last_name }}</td>
+                                <td>{{ ins.address }}</td>
+                                <td>{{ ins.postal_code }}</td>
+                                <td>{{ ins.email_ID }}</td>
+                                <td>{{ ins.phone_number }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

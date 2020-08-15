@@ -1,0 +1,68 @@
+{% extends 'student/base.html' %}
+
+{% load staticfiles%}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'student\student.css' %}">
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'student/student.js' %}"></script>
+{% endblock %}
+{% block title%}Enrollments{% endblock %}
+{% block activeenroll %}active{% endblock %}
+
+{% block body %}
+<div class="jumbotron bg-light">
+    <div class="row">
+        <div class="col col-lg-12">
+            <a class="btn btn-dark" href="{% url 'student:enroll-add' %}" role="button">Add Enrollment</a>
+            <div class="form-group float-right">
+                <form action="{% url 'student:enroll-search' %}" method="GET" accept-charset="utf-8">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <i class="fa fa-search input-group-text" style="padding-top:10px;"></i>
+                        </div>
+                        <input
+                                class="form-control"
+                                type="text" name="q"
+                                value="{{request.GET.q}}"
+                                placeholder="Student or Batch"
+                                style="width:500px;"/>
+                    </div>
+                </form>
+            </div>
+            <div style="margin-top:1em" class="card">
+                <div class="card-header text-dark table-heading">Enrollments</div>
+                <div class="card-body panel-full">
+                    <table class="table table-responsive-sm table-striped table-condensed sortable">
+                        <thead>
+                            <tr class="text-center">
+                                <th align="center">Student</th>
+                                <th align="center">Batch</th>
+                                 <th align="center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for enroll in object_list %}
+                            <tr class="text-center">
+                                <td>{{ enroll.student }}</td>
+                                <td>{{ enroll.batch }}</td>
+                                <td style="padding: 0px">
+                                    <a class="btn btn-info click" style="display:'inline-block'" href="{% url 'student:enroll-update' enroll.id %}" role="button">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a class="btn btn-danger click" href="{% url 'student:enroll-delete' enroll.id %}" role="button">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

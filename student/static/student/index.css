@@ -1,0 +1,27 @@
+#introduction {
+  background:  linear-gradient(to bottom, rgba(226,226,226,0.35) 0%, rgba(254,254,254,0.35) 0%, rgba(219,219,219,0.99) 99%, rgba(219,219,219,1) 100%), url('https://images.unsplash.com/photo-1514050566906-8d077bae7046?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2369b77063d1bf6462de3d6658f18a6a&auto=format&fit=crop&w=1952&q=80') 0% 0%/cover
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.fill-viewport {
+  min-height: 100vh
+}
+
+.text-white-70 {
+  color: rgba(255,255,255,0.7)
+}
+.text-black-70 {
+  color: rgba(0,0,0,0.7)
+}
+.text-black-40 {
+  color: rgba(0,0,0,0.4)
+}
+.text-white-40 {
+  color: rgba(255,255,255,0.4)
+}
+
+
+
